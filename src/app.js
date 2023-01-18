@@ -30,16 +30,6 @@ app.get('/', (req, res) => {
 app.use('/api/v1/users', userRouter)
 app.use('/api/v1/auth', authRouter)
 
-app.get('/api/v1/uploads/:imgName', (req,res)=>{
-    const imgName = req.params.imgName
-    res.status(200).sendFile(path.resolve('uploads/') + `/${imgName}`)
-}) // es para hacer un get de la imagen del perfil
-
-app.post('/upload', upload.single('image'), (req, res)=>{
-    res.status(200).json(req.file)
-} )
-
-
 app.get('/ejemplo',
     passport.authenticate('jwt', {session: false}),
     (req,res) => [

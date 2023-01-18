@@ -3,23 +3,6 @@ const { hashPassword, comparePassword } = require('../utils/crypt')
 
 const Users = require('../models/users.model')
 
-const userDB = [
-    {
-        "id": "fafa4304-cc20-44a4-a7a0-f692feafb266",
-        "first_name": "string",
-        "last_name": "string",
-        "email": "example@example.com",
-        "password": "$2b$10$iXA47IOGFgFyVBm1yNbUmOAkVeoVYwGsdpJmS3iLJrt5N.ZFDbSBO",
-        "phone": "",
-        "birthday_date": "DD/MM/YYYY",
-        "rol": "admin",
-        "profile_image": "",
-        "country": "string",
-        "is_active": true,
-        "verified": false
-    }
-]
-
 const getAllUsers = async () => {
     const data = await Users.findAll({
         attributes: {
@@ -49,8 +32,7 @@ const createUsers = async (data) => {
         id: uuid.v4(),
         password: hashPassword(data.password),
         rol: 'normal',
-        is_active: true,
-        verified: false
+        is_active: true
     })
     return newUser
 }
@@ -66,7 +48,7 @@ const deleteUser = async (id) => {
 
 const updateUser = async (userId, data, userRol) => {
     if (userRol === 'admin') {
-        const { password, id, verified, ...newData } = data
+        const { password, id, ...newData } = data
         const response = await Users.update({
             ...newData
         }, {
@@ -76,7 +58,7 @@ const updateUser = async (userId, data, userRol) => {
         })
         return response
     } else {
-        const { password, id, verified, role, ...newData } = data
+        const { password, id, role, ...newData } = data
         const response = await Users.update({
             ...newData
         }, {
@@ -98,23 +80,11 @@ const getUserByEmail = async (email) => {
     //? select * from users where email = ${email};
 }
 
-const editprofileImage = async (userId, imgUrl) => {
-    const response = await Users.update({
-        profile_image: imgUrl
-    }, {
-        where: {
-            id: userId
-        }
-    })
-    return response
-}
-
 module.exports = {
     getAllUsers,
     getUsersById,
     createUsers,
     deleteUser,
     updateUser,
-    getUserByEmail,
-    editprofileImage
+    getUserByEmail
 }

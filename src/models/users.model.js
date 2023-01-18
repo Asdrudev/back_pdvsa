@@ -33,14 +33,6 @@ const Users = db.define('users', {
         allowNull: false,
         type: DataTypes.STRING
     },
-    email: {
-        allowNull: false,
-        type: DataTypes.STRING(30),
-        validate: {
-            isEmail: true
-        },
-        unique: true
-    },
     password: {
         allowNull: false,
         type: DataTypes.STRING,
@@ -52,35 +44,19 @@ const Users = db.define('users', {
         allowNull: false,
         type: DataTypes.STRING
     },
-    birthday_date: {
-        allowNull: false,
-        type: DataTypes.DATEONLY
-    },
     role: {
         allowNull: false,
         type: DataTypes.STRING,
         defaultValue: 'normal'
     },
-    profile_image: {
+    ci: {
+        allowNull: false,
+        type: DataTypes.DOUBLE,
+    },
+    email: {
+        allowNull: false, 
         type: DataTypes.STRING,
-        validate:{
-            isUrl: true
-        }
-    },
-    country: {
-        allowNull: false,
-        type: DataTypes.STRING
-    },
-    is_active: {
-        allowNull: false,
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
-    },
-    verified: {
-        allowNull: false,
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
-    },
+    }
 })
 
 module.exports = Users

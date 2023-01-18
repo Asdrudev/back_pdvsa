@@ -1,6 +1,3 @@
-
-const e = require('express')
-const { restart } = require('nodemon')
 const userControllers = require('../users/users.controllers')
 
 const getAll = (req, res) => {
@@ -11,7 +8,7 @@ const getAll = (req, res) => {
         .catch(err => {
             res.status(400).json(err)
         })
-   
+   return data
 }
 
 const getUsersById = (req,res) =>{
@@ -34,16 +31,17 @@ const register = (req, res)=> {
         !body.last_name ||
         !body.email ||
         !body.password ||
-        !body.birthday_date ||
-        !body.country
+        !body.ci ||
+        !body.phone
+
     ){
         return res.status(400).json({message: 'All fields must be completed', fields:{
             first_name: 'string',
             last_name: 'string',
             email: 'example@example.com',
             password: 'string',
-            birthday_date: 'YYYY/MM/DD',
-            country: 'string'
+            phone: '+580123456789',
+            ci: 'number'
         } })
     }else{
         userControllers.createUsers(body)
@@ -81,10 +79,7 @@ const edit = (req, res) => {
         !data.email ||
         !data.phone ||
         !data.rol ||
-        !data.profile_image ||
-        !data.birthday_date ||
-        !data.country ||
-        !data.is_active){
+        !data.ci){
             return res.status(400).json({message: 'All fields must be completed', fields:{
                 first_name: 'string',
                 last_name: 'string',
@@ -112,10 +107,7 @@ const editMyUser = (req, res) => {
         !data.last_name ||
         !data.email ||
         !data.phone ||
-        !data.profile_image ||
-        !data.birthday_date ||
-        !data.country ||
-        !data.is_active){
+        !data.ci){
             return res.status(400).json({message: 'All fields must be completed', fields:{
                 first_name: 'string',
                 last_name: 'string',
@@ -152,18 +144,6 @@ const getMyUser = (req, res) => {
     }
 }
 
-const postProfileImg = (req,res) => {
-    const userId = req.user.id
-    const imgPath = req.hostname + ':8000' + '/api/v1/uploads/' + req.file.filename
-
-    const data = userControllers.editprofileImage(userId, imgPath)
-    if(data){
-        res.status(200).json(data)
-    }else{
-        return restart.status(400).json({message: 'error'})
-    }
-}
-
 module.exports = {
     getAll,
     getUsersById,
@@ -173,5 +153,4 @@ module.exports = {
     editMyUser,
     deleteMyUser,
     getMyUser,
-    postProfileImg
 }
