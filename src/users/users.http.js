@@ -86,10 +86,7 @@ const edit = (req, res) => {
                 email: 'example@example.com',
                 phone: '+5804241333286',
                 rol: 'string',
-                profile_image: 'example.com/img/example.png',
-                birthday_date: 'DD/MM/YYYY',
-                country: 'string',
-                is_active: 'boolean'
+                ci: 'number'
             } })
     } else {
         const response = userControllers.updateUser(id, data)
@@ -113,10 +110,7 @@ const editMyUser = (req, res) => {
                 last_name: 'string',
                 email: 'example@example.com',
                 phone: '+5804241333286',
-                profile_image: 'example.com/img/example.png',
-                birthday_date: 'DD/MM/YYYY',
-                country: 'string',
-                is_active: 'boolean'
+                ci: 'number'
             } })
     } else {
         const response = userControllers.updateUser(id, data, req.users.rol)
@@ -144,6 +138,18 @@ const getMyUser = (req, res) => {
     }
 }
 
+const getByCI = (req, res) => {
+    const ci = req.params.ci
+
+    userControllers.getUserByCI(ci)
+    .then(response => {
+        res.status(200).json(response)
+    })
+    .catch(error => {
+        res.status(400).json(error)
+    })
+}
+
 module.exports = {
     getAll,
     getUsersById,
@@ -153,4 +159,5 @@ module.exports = {
     editMyUser,
     deleteMyUser,
     getMyUser,
+    getByCI
 }

@@ -31,8 +31,7 @@ const createUsers = async (data) => {
         ...data,
         id: uuid.v4(),
         password: hashPassword(data.password),
-        rol: 'normal',
-        is_active: true
+        rol: 'normal'
     })
     return newUser
 }
@@ -70,10 +69,10 @@ const updateUser = async (userId, data, userRol) => {
     }
 }
 
-const getUserByEmail = async (email) => {
+const getUserByCI = async (ci) => {
     const data = await Users.findOne({
         where: {
-            email: email
+            ci:ci
         }
     })
     return data
@@ -86,5 +85,5 @@ module.exports = {
     createUsers,
     deleteUser,
     updateUser,
-    getUserByEmail
+    getUserByCI
 }
