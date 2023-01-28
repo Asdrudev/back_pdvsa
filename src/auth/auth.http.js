@@ -4,15 +4,15 @@ const { loginUser } = require('../auth/auth.controllers')
 
 const login = (req, res) => {
     const data = req.body;
-    if (!data.email || !data.password) {
+    if (!data.ci || !data.password) {
         return res.status(400).json({ message: 'Missing Data' })
     }else{
-        loginUser(data.email, data.password)
+        loginUser(data.ci, data.password)
         .then(response => {
             if (response) {
                 const token = jwt.sign({
                     id: response.id,
-                    email: response.email,
+                    ci: response.ci,
                     rol: response.rol
                 }, 'academlo')
         

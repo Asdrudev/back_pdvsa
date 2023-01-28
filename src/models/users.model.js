@@ -1,21 +1,3 @@
-/*
-{
-        "id": "fafa4304-cc20-44a4-a7a0-f692feafb266",
-        "first_name": "string",
-        "last_name": "string",
-        "email": "example@example.com",
-        "password": "$2b$10$iXA47IOGFgFyVBm1yNbUmOAkVeoVYwGsdpJmS3iLJrt5N.ZFDbSBO",
-        "phone": "",
-        "birthday_date": "DD/MM/YYYY",
-        "rol": "admin",
-        "profile_image": "",
-        "country": "string",
-        "is_active": true,
-        "verified": false
-    }
-
-*/
-
 const {DataTypes} = require('sequelize')
 const {db} = require('../utils/database')
 
@@ -51,7 +33,7 @@ const Users = db.define('users', {
     },
     ci: {
         allowNull: false,
-        type: DataTypes.DOUBLE,
+        type: DataTypes.STRING,
     },
     email: {
         allowNull: false, 
